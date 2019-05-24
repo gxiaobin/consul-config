@@ -1,0 +1,39 @@
+##scb-config####
+server:
+  port: 8812
+spring:
+  application:
+    name: config-server #配置服务名称
+  cloud:
+    #配置consul
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        hostname: 127.0.0.1
+        healthCheckPath: /health
+        healthCheckInterval: 15s
+        instance-id: id-config-server
+    # 配置中心git仓库
+    config:
+      enabled: true
+      server:
+        git:
+          #配置git仓库的地址
+          uri: http://192.168.1.1:6060/root/ConfigCenter.git
+          username: root
+          password: root
+          #  #强制获取覆盖
+          force-pull: true
+          # 不对服务器SSL 证书进行验证
+          skip-ssl-validation: true
+          #设置超时时间是4秒
+          timeout: 4
+          # 删除存储库中未跟踪的分支
+          delete-untracked-branches: true
+          search-paths: '{application}'
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
